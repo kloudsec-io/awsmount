@@ -1,0 +1,68 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "awsmount"
+version = "1.0.0"
+description = "Mount any AWS account as a read-only filesystem (shell, WebDAV, FUSE)."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Tarek CHEIKH", email = "tarek@kloudsec.io" }]
+maintainers = [{ name = "Tarek CHEIKH", email = "tarek@kloudsec.io" }]
+keywords = ["aws", "filesystem", "fuse", "webdav", "boto3", "read-only"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Intended Audience :: System Administrators",
+  "Operating System :: MacOS",
+  "Operating System :: POSIX :: Linux",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: System :: Filesystems",
+  "Topic :: Utilities",
+]
+dependencies = [
+  "boto3>=1.34",
+  "click>=8.1",
+  "prompt_toolkit>=3.0.40",
+  "wsgidav>=4.3",
+  "cheroot>=10",
+  "mfusepy>=1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/kloudsec-io/awsmount"
+Repository = "https://github.com/kloudsec-io/awsmount"
+Issues = "https://github.com/kloudsec-io/awsmount/issues"
+Documentation = "https://github.com/kloudsec-io/awsmount#readme"
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=7",
+  "pytest-timeout>=2",
+  "moto[server,all]>=5",
+  "flake8>=6",
+]
+
+[project.scripts]
+awsmount = "awsmount.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+timeout = 120
+markers = [
+  "e2e: end-to-end tests that need a real mount (not run by default)",
+]
